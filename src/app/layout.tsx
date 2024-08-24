@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import theme from '@/styles/theme';
 import { ThemeProvider } from '@mui/material/styles';
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,9 @@ export default function RootLayout({
       <body className={inter.className}>
       <AppRouterCacheProvider>
         <ThemeProvider theme={theme}>
+          <ReactQueryProvider>
           {children}
+          </ReactQueryProvider>
         </ThemeProvider>
       </AppRouterCacheProvider>
       </body>

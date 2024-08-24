@@ -1,5 +1,6 @@
 "use server"
 
+import { ProductI } from "@/types/product";
 import { UserI } from "@/types/user";
 
 export async function getUsers() {
@@ -35,6 +36,22 @@ export async function loginUser({ username, password }: { username: string, pass
     .then(res => res.token)
 
   return {username, token}
+
+  }
+
+  catch(error) {
+    console.error(error)
+    // return { error }
+  }
+}
+
+export async function getProducts() {
+  try {
+
+    const products: ProductI[] = await fetch('https://fakestoreapi.com/products')
+    .then(res=>res.json())
+
+  return products
 
   }
 

@@ -27,6 +27,30 @@ export const useAddToCart = () => {
   };
 };
 
+export const useRemoveFromCart = () => {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: showProduct, // Only to simulate a request
+    onSuccess: data => {
+      const user = queryClient.getQueryData(['user_data']) as UserI;
+
+      queryClient.setQueryData(
+        [`user_${user.id}_cart`],
+        (
+          prev: ProductI[] | undefined // Custom hook for this
+        ) => (prev ? prev.filter(c => c.id !== data?.id) : [data])
+      );
+    },
+  });
+
+  return {
+    isLoading: mutation.isPending,
+    error: mutation.isError,
+    removeFromCart: mutation.mutateAsync,
+  };
+};
+
 export const useGetCart = () => {
   const queryClient = useQueryClient();
 

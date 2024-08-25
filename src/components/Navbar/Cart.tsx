@@ -8,13 +8,15 @@ import {
   Popover,
   Typography,
 } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import { useGetCart } from '@/hooks/useCart';
+import { useRemoveFromCart, useGetCart } from '@/hooks/useCart';
 import Image from 'next/image';
 
 export default function Cart() {
   const { data } = useGetCart();
+  const { removeFromCart, isLoading } = useRemoveFromCart();
+  const [productBeingRemoved, setProductBeingRemoved] = useState<number>();
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -32,6 +34,16 @@ export default function Cart() {
   const totalValue = useMemo(
     () => data?.reduce((prev, current) => prev + Number(current.price), 0),
     [data]
+  );
+
+  const handleRemove = (id: number) => () => {
+    setProductBeingRemoved(id);
+    removeFromCart(id);
+  };
+
+  const productIsBeingRemoved = useCallback(
+    (id: number) => productBeingRemoved === id && isLoading,
+    [isLoading, productBeingRemoved]
   );
 
   return (
@@ -83,7 +95,11 @@ export default function Cart() {
               >
                 {e.title}
               </Typography>
-              <IconButton color="error">
+              <IconButton
+                disabled={productIsBeingRemoved(e.id)}
+                onClick={handleRemove(e.id)}
+                color="error"
+              >
                 <CloseIcon />
               </IconButton>
             </Box>

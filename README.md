@@ -22,6 +22,20 @@ bun dev
 
 Abra [http://localhost:3000](http://localhost:3000) em seu navegador.
 
+## Testes
+
+Para rodar os testes, execute o comando
+
+```bash
+npm run cy:run:headed
+```
+
+Ou caso queira a interface de controle do cypress
+
+```bash
+npm run cy:open
+```
+
 ## Vercel
 
 O projeto se encontrar hospedado na [Vercel](https://vercel.com/) na seguinte url: https://big-data-health-challenge.vercel.app/

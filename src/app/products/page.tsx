@@ -23,13 +23,13 @@ export default async function MainPage() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 2,
         justifyContent: 'center',
         alignItems: 'center',
+        padding: { xl: '6rem', lg: '6rem', md: '4rem', sm: '2rem', xs: '1rem' }, // Export that style
         minHeight: '100vh',
+        gap: 2,
       }}
     >
-      Escolha com qual usuário irá utilizar a plataforma 2
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Products />
       </HydrationBoundary>

@@ -1,62 +1,73 @@
-"use server"
+'use server';
 
-import { ProductI } from "@/types/product";
-import { UserI } from "@/types/user";
+import { ProductI } from '@/types/product';
+import { UserI } from '@/types/user';
 
 export async function getUsers() {
   try {
+    const users: UserI[] = await fetch('https://fakestoreapi.com/users').then(
+      res => res.json()
+    );
 
-    const users: UserI[] = await fetch('https://fakestoreapi.com/users')
-    .then(res=>res.json())
-
-  return users
-
-  }
-
-  catch(error) {
-    console.error(error)
+    return users;
+  } catch (error) {
+    console.error(error);
     // return { error }
   }
 }
 
-export async function loginUser({ username, password }: { username: string, password: string }) {
+export async function showUser(userId: number) {
+  console.log('USER ID', userId);
   try {
+    const user: UserI = await fetch(
+      `https://fakestoreapi.com/users/${userId}`
+    ).then(res => res.json());
 
+    console.log('User', user);
+    return user;
+  } catch (error) {
+    console.error(error);
+    // return { error };
+  }
+}
+
+export async function loginUser({
+  username,
+  password,
+}: {
+  username: string;
+  password: string;
+}) {
+  try {
     const token = await fetch('https://fakestoreapi.com/auth/login', {
-      method:'POST',
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-          username: username,
-          password: password
-      })
-  })
-    .then(res=>res.json())
-    .then(res => res.token)
+        username: username,
+        password: password,
+      }),
+    })
+      .then(res => res.json())
+      .then(res => res.token);
 
-  return {username, token}
-
-  }
-
-  catch(error) {
-    console.error(error)
+    return { username, token };
+  } catch (error) {
+    console.error(error);
     // return { error }
   }
 }
 
 export async function getProducts() {
   try {
+    const products: ProductI[] = await fetch(
+      'https://fakestoreapi.com/products'
+    ).then(res => res.json());
 
-    const products: ProductI[] = await fetch('https://fakestoreapi.com/products')
-    .then(res=>res.json())
-
-  return products
-
-  }
-
-  catch(error) {
-    console.error(error)
+    return products;
+  } catch (error) {
+    console.error(error);
     // return { error }
   }
 }

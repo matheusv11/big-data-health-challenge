@@ -1,5 +1,4 @@
-import { Box, Grid, Paper } from '@mui/material';
-import styles from './page.module.css';
+import { Box, Typography } from '@mui/material';
 import {
   dehydrate,
   HydrationBoundary,
@@ -21,13 +20,16 @@ export default async function Home() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 2,
         justifyContent: 'center',
         alignItems: 'center',
+        padding: { xl: '6rem', lg: '6rem', md: '4rem', sm: '2rem', xs: '1rem' }, // Export that style
         minHeight: '100vh',
+        gap: 2,
       }}
     >
-      Escolha com qual usuário irá utilizar a plataforma
+      <Typography variant="h5">
+        Escolha com qual usuário irá utilizar a plataforma
+      </Typography>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Users />
       </HydrationBoundary>

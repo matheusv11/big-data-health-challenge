@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="absolute">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link href="/products" style={{ cursor: 'pointer' }}>

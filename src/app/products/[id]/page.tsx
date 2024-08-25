@@ -4,17 +4,7 @@ import Image from 'next/image';
 export default async function ProductDetail({ params }) {
   // Cache the api request or not?
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: { xl: '6rem', lg: '6rem', md: '4rem', sm: '2rem', xs: '1rem' }, // Export that style
-        minHeight: '100vh',
-        gap: 2,
-      }}
-    >
+    <Box>
       <Paper elevation={8} sx={{ p: 2, minWidth: '50vw' }}>
         <Grid container gap={2}>
           {/* <Paper elevation={8}></Paper> */}

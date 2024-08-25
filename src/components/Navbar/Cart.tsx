@@ -3,8 +3,11 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Box, Divider, IconButton, Popover, Typography } from '@mui/material';
 import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
+import { useGetCart } from '@/hooks/useCart';
 
 export default function Cart() {
+  const { data } = useGetCart();
+
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -45,9 +48,9 @@ export default function Cart() {
         }}
       >
         <Typography sx={{ p: 2 }}>
-          {[1, 2, 3].map(e => (
+          {data?.map(e => (
             <Box sx={{ display: 'flex', gap: 2 }} key={e}>
-              <h2>OI</h2>
+              <h2>{e.name}</h2>
               <IconButton color="error">
                 <CloseIcon />
               </IconButton>

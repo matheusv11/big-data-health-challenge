@@ -51,7 +51,8 @@ export const useUser = () => {
 
 export const useUserData = () => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['user_data'],
+    queryKey: ['user_data'], // Defined a persister
+    enabled: false,
     // queryFn: getUsers,
   });
 

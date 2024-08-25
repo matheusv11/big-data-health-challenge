@@ -71,3 +71,28 @@ export async function getProducts() {
     // return { error }
   }
 }
+
+export async function addToCart({ productId }) {
+  try {
+    const token = await fetch('https://fakestoreapi.com/auth/login', {
+      // Get the productData
+      // Change to cart request
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: 'username',
+        password: 'password',
+      }),
+    })
+      .then(res => res.json())
+      .then(res => res.token);
+    // productId
+    return token;
+    // return { username, token };
+  } catch (error) {
+    console.error(error);
+    // return { error }
+  }
+}

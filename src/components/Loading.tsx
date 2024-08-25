@@ -1,6 +1,6 @@
 import { Box, CircularProgress } from '@mui/material';
 
-export default function Loading({ fullPage }) {
+export default function Loading({ fullPage }: { fullPage?: boolean }) {
   return (
     <Box
       sx={{

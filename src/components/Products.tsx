@@ -4,12 +4,19 @@ import Image from 'next/image';
 import { Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useProduct } from '@/hooks/useProduct';
+import { useAddToCart } from '@/hooks/useCart';
+
 import { useRouter } from 'next/navigation';
 import Loading from './Loading';
 
 export default function Users() {
   // UseMemo
   const { isLoading, error, products } = useProduct();
+  const {
+    addToCart,
+    error: cartError,
+    isLoading: loadingCart,
+  } = useAddToCart();
   const router = useRouter();
 
   const [paperElevation, setPaperElevation] = useState<number>();
@@ -18,12 +25,6 @@ export default function Users() {
     (id: number) => (paperElevation === id ? 6 : 0),
     [paperElevation]
   );
-
-  const addToCart = async ({ username, password }: any) => {
-    console.log('Username', username);
-    console.log('Senha', password);
-    // await loginUser.mutateAsync({ username: username, password: password });
-  };
 
   if (isLoading) return <Loading fullPage />;
 
@@ -68,7 +69,6 @@ export default function Users() {
               variant="standard"
               multiline
               rows={3}
-              maxRows={3}
               disabled
               value={u.title}
               InputProps={{
@@ -86,7 +86,15 @@ export default function Users() {
               </Typography>
             </Typography>
 
-            <Button variant="contained">Adicionar ao carrinho</Button>
+            <Button
+              variant="contained"
+              onClick={e => {
+                e.stopPropagation();
+                addToCart();
+              }}
+            >
+              Adicionar ao carrinho
+            </Button>
           </Paper>
         </Grid>
       ))}

@@ -19,17 +19,7 @@ export default async function MainPage() {
   });
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: { xl: '6rem', lg: '6rem', md: '4rem', sm: '2rem', xs: '1rem' }, // Export that style
-        minHeight: '100vh',
-        gap: 2,
-      }}
-    >
+    <Box>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Products />
       </HydrationBoundary>

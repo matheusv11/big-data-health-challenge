@@ -29,7 +29,7 @@ export const useUser = () => {
     error,
   } = useQuery({
     queryKey: ['users'],
-    queryFn: getUsers,
+    queryFn: () => getUsers(),
   });
 
   return {

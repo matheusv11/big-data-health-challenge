@@ -12,7 +12,7 @@ export const useAddToCart = () => {
       const user = queryClient.getQueryData(['user_data']) as UserI;
 
       queryClient.setQueryData(
-        [`user_${user.id}_cart`],
+        [`user_${user?.id}_cart`],
         (prev: ProductI[] | undefined) => (prev ? [data, ...prev] : [data])
       );
     },
@@ -34,7 +34,7 @@ export const useRemoveFromCart = () => {
       const user = queryClient.getQueryData(['user_data']) as UserI;
 
       queryClient.setQueryData(
-        [`user_${user.id}_cart`],
+        [`user_${user?.id}_cart`],
         (prev: ProductI[] | undefined) =>
           prev ? prev.filter(c => c.id !== data?.id) : [data]
       );
@@ -54,7 +54,7 @@ export const useGetCart = () => {
   const user = queryClient.getQueryData(['user_data']) as UserI;
 
   const { data, isLoading, error } = useQuery<ProductI[]>({
-    queryKey: [`user_${user.id}_cart`],
+    queryKey: [`user_${user?.id}_cart`],
   });
 
   return {

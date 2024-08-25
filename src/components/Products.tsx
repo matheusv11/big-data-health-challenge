@@ -31,12 +31,13 @@ export default function Users() {
     );
   return (
     <Grid container spacing={2}>
-      {products?.map(u => (
-        <Grid item xl={2} lg={3} md={3} sm={4} xs={6} key={u.id}>
+      {products?.map(p => (
+        <Grid item xl={2} lg={3} md={3} sm={4} xs={6} key={p.id}>
           <Paper
+            data-testid="product"
             onMouseLeave={() => setPaperElevation(undefined)}
-            onMouseOver={() => setPaperElevation(u.id)}
-            elevation={handleElevation(u.id)}
+            onMouseOver={() => setPaperElevation(p.id)}
+            elevation={handleElevation(p.id)}
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -47,22 +48,22 @@ export default function Users() {
               alignItems: 'center',
               cursor: 'pointer',
             }}
-            onClick={() => router.push(`/products/${u.id}`)}
+            onClick={() => router.push(`/products/${p.id}`)}
           >
             <Image
-              src={u.image}
+              src={p.image}
               alt="product picture"
               width="128"
               height="128"
             />
             <TextField
-              sx={{ mt: 1 }}
+              sx={{ mt: 1, pointerEvents: 'none' }}
               fullWidth
               variant="standard"
               multiline
               rows={3}
               disabled
-              value={u.title}
+              value={p.title}
               InputProps={{
                 disableUnderline: true,
               }}
@@ -82,11 +83,11 @@ export default function Users() {
                 display="inline"
                 fontWeight="bold"
               >
-                {u.price}
+                {p.price}
               </Typography>
             </Box>
 
-            <AddToCartBtn productId={u.id} />
+            <AddToCartBtn productId={p.id} />
           </Paper>
         </Grid>
       ))}

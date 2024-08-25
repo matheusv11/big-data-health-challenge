@@ -30,6 +30,7 @@ export default function Users() {
       {users?.map(u => (
         <Grid item xl="auto" lg="auto" md={2} sm={4} xs={6} key={u.id}>
           <Paper
+            data-testid="user-card"
             onMouseLeave={() => setPaperElevation(undefined)}
             onMouseOver={() => setPaperElevation(u.id)}
             elevation={handleElevation(u.id)}

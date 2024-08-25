@@ -29,11 +29,12 @@ export default function AddToCartBtn({ productId }: { productId: number }) {
   return (
     <>
       {hasAdded(productId) ? (
-        <Button variant="contained" disabled>
+        <Button data-testid="added-cart-btn" variant="contained" disabled>
           Adicionado
         </Button>
       ) : (
         <Button
+          data-testid="add-cart-btn"
           variant="contained"
           disabled={productIsBeingAdded(productId)}
           onClick={handleCart(productId)}

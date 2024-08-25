@@ -16,7 +16,11 @@ export default async function ProductDetail({
 
   return (
     <Box>
-      <Paper elevation={8} sx={{ p: 2, minWidth: '50vw' }}>
+      <Paper
+        data-testid="product-detail"
+        elevation={8}
+        sx={{ p: 2, minWidth: '50vw' }}
+      >
         <Grid container gap={2}>
           <Grid item lg="auto" xs={12}>
             <Image

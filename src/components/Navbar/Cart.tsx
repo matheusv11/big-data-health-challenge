@@ -49,9 +49,9 @@ export default function Cart() {
   return (
     <>
       <IconButton
+        data-testid="cart-btn"
         color="inherit"
         aria-describedby={id}
-        // variant="contained"
         sx={{ mr: 2 }}
         onClick={handleClick}
       >
@@ -96,6 +96,7 @@ export default function Cart() {
                 {e.title}
               </Typography>
               <IconButton
+                data-testid="remove-product-btn"
                 disabled={productIsBeingRemoved(e.id)}
                 onClick={handleRemove(e.id)}
                 color="error"

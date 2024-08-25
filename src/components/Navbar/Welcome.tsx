@@ -8,7 +8,7 @@ export default function Welcome() {
 
   return (
     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-      Seja bem vindo, {data?.name}
+      Seja bem vindo, {data?.name?.firstname}
     </Typography>
   );
 }

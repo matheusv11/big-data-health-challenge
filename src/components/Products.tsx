@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useProduct } from '@/hooks/useProduct';
 import { useAddToCart } from '@/hooks/useCart';
@@ -75,8 +75,16 @@ export default function Users() {
                 disableUnderline: true,
               }}
             />
-            <Typography variant="subtitle1" textAlign="center">
-              Valor:{' '}
+
+            <Box>
+              <Typography
+                variant="subtitle1"
+                textAlign="center"
+                display="inline"
+              >
+                Valor:{' '}
+              </Typography>
+
               <Typography
                 variant="subtitle2"
                 display="inline"
@@ -84,7 +92,7 @@ export default function Users() {
               >
                 {u.price}
               </Typography>
-            </Typography>
+            </Box>
 
             <Button
               variant="contained"

@@ -2,6 +2,7 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUsers, showUser } from '@/server/actions';
+import { UserI } from '@/types/user';
 
 export const useUserLogin = () => {
   const queryClient = useQueryClient();
@@ -10,13 +11,8 @@ export const useUserLogin = () => {
   const mutation = useMutation({
     mutationFn: showUser,
     onSuccess: data => {
-      // queryClient.setQueryData(['user_data'], data); // API down, not working now
-
-      queryClient.setQueryData(['user_data'], {
-        id: 1,
-        name: 'Carlinhos De Dalva',
-        username: 'carlinhos',
-      });
+      console.log('Data', data);
+      queryClient.setQueryData(['user_data'], { user: data });
 
       router.push('/products');
     },
@@ -30,14 +26,11 @@ export const useUserLogin = () => {
 };
 
 export const useUser = () => {
-  // Move mutation to another hook
-
   const {
     data: users,
     isLoading,
     error,
   } = useQuery({
-    // Add loading
     queryKey: ['users'],
     queryFn: getUsers,
   });
@@ -50,14 +43,14 @@ export const useUser = () => {
 };
 
 export const useUserData = () => {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['user_data'], // Defined a persister
+  const { data, isLoading, error } = useQuery<{ user: UserI }>({
+    queryKey: ['user_data'], // Define a persister
     enabled: false,
     // queryFn: getUsers,
   });
 
   return {
-    data,
+    data: data?.user,
     isLoading,
     error,
   };

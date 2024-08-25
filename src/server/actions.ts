@@ -17,13 +17,11 @@ export async function getUsers() {
 }
 
 export async function showUser(userId: number) {
-  console.log('USER ID', userId);
   try {
     const user: UserI = await fetch(
       `https://fakestoreapi.com/users/${userId}`
     ).then(res => res.json());
 
-    console.log('User', user);
     return user;
   } catch (error) {
     console.error(error);

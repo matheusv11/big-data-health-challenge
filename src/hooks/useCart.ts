@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getProducts, addToCart } from '@/server/actions';
+import { UserI } from '@/types/user';
 
 export const useAddToCart = () => {
   const queryClient = useQueryClient();
@@ -37,9 +38,8 @@ export const useAddToCart = () => {
 export const useGetCart = () => {
   const queryClient = useQueryClient();
 
-  const user = queryClient.getQueryData(['user_data']); // Type
+  const { user } = queryClient.getQueryData(['user_data']) as { user: UserI };
 
-  console.log('USER', user);
   const { data, isLoading, error } = useQuery({
     queryKey: [`user_${user?.id}_cart`], // Define a persister
     // enabled: false,

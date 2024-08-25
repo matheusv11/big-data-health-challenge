@@ -1,13 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-import { Button, Grid, Paper, Typography } from '@mui/material';
+import { Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useProduct } from '@/hooks/useProduct';
 import { useRouter } from 'next/navigation';
+import Loading from './Loading';
 
 export default function Users() {
-  const { products, loginUser } = useProduct();
+  // UseMemo
+  const { isLoading, error, products } = useProduct();
   const router = useRouter();
 
   const [paperElevation, setPaperElevation] = useState<number>();
@@ -20,13 +22,21 @@ export default function Users() {
   const addToCart = async ({ username, password }: any) => {
     console.log('Username', username);
     console.log('Senha', password);
-    await loginUser.mutateAsync({ username: username, password: password });
+    // await loginUser.mutateAsync({ username: username, password: password });
   };
 
+  if (isLoading) return <Loading fullPage />;
+
+  if (error)
+    return (
+      <Typography variant="body1">
+        Ocorreu um erro ao buscar os produtos. Tente novamente
+      </Typography>
+    );
   return (
     <Grid container spacing={2}>
       {products?.map(u => (
-        <Grid item md="auto" key={u.id}>
+        <Grid item xl={2} lg={3} md={3} sm={4} xs={6} key={u.id}>
           <Paper
             onMouseLeave={() => setPaperElevation(undefined)}
             onMouseOver={() => setPaperElevation(u.id)}
@@ -35,34 +45,45 @@ export default function Users() {
               display: 'flex',
               flexDirection: 'column',
               p: 2,
-              maxWidth: 162,
+              // width: 242,
+              // height: '120px',
               // maxHeight: 180,
+              height: 380,
+              gap: 2,
+              justifyContent: 'center',
+              alignItems: 'center',
               cursor: 'pointer',
             }}
             onClick={() => router.push(`/products/${u.id}`)}
-            // onClick={() => makeLogin({username: u.username, password: u.password})}
           >
             <Image
               src={u.image}
-              alt="profile picture"
+              alt="product picture"
               width="128"
               height="128"
             />
-            <Typography
-              sx={{
-                overflow: 'hidden',
-                display: '-webkit-box',
-                '-webkit-line-clamp': 1 /* number of lines to show */,
-                'line-clamp': 2,
-                '-webkit-box-orient': 'vertical',
+            <TextField
+              sx={{ mt: 1 }}
+              fullWidth
+              variant="standard"
+              multiline
+              rows={3}
+              maxRows={3}
+              disabled
+              value={u.title}
+              InputProps={{
+                disableUnderline: true,
               }}
-              variant="subtitle1"
-              textAlign="center"
-            >
-              {u.title}
-            </Typography>
+            />
             <Typography variant="subtitle1" textAlign="center">
-              Valor: {u.price}
+              Valor:{' '}
+              <Typography
+                variant="subtitle2"
+                display="inline"
+                fontWeight="bold"
+              >
+                {u.price}
+              </Typography>
             </Typography>
 
             <Button variant="contained">Adicionar ao carrinho</Button>

@@ -15,8 +15,10 @@
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
     "@mui/material-nextjs": "^5.16.6",
+    "@tanstack/query-sync-storage-persister": "^5.52.0",
     "@tanstack/react-query": "^5.52.1",
     "@tanstack/react-query-devtools": "^5.52.1",
+    "@tanstack/react-query-persist-client": "^5.52.1",
     "next": "14.2.6",
     "react": "^18",
     "react-dom": "^18"

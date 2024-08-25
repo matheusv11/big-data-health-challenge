@@ -10,7 +10,14 @@ export const useUserLogin = () => {
   const mutation = useMutation({
     mutationFn: showUser,
     onSuccess: data => {
-      queryClient.setQueryData(['user_data'], data);
+      // queryClient.setQueryData(['user_data'], data); // API down, not working now
+
+      queryClient.setQueryData(['user_data'], {
+        id: 1,
+        name: 'Carlinhos De Dalva',
+        username: 'carlinhos',
+      });
+
       router.push('/products');
     },
   });
@@ -37,6 +44,19 @@ export const useUser = () => {
 
   return {
     users,
+    isLoading,
+    error,
+  };
+};
+
+export const useUserData = () => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['user_data'],
+    // queryFn: getUsers,
+  });
+
+  return {
+    data,
     isLoading,
     error,
   };

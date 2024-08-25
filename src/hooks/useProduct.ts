@@ -1,11 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getProducts, addToCart } from '@/server/actions';
+import { useQuery } from '@tanstack/react-query';
+import { getProducts } from '@/server/actions';
 
 export const useProduct = () => {
-  // Move mutation to another hook
-  // const router = useRouter();
-  // const queryClient = useQueryClient();
-
   const {
     data: products,
     isLoading,

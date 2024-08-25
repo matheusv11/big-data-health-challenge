@@ -2,7 +2,6 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUsers, showUser } from '@/server/actions';
-import { UserI } from '@/types/user';
 
 export const useUserLogin = () => {
   const queryClient = useQueryClient();

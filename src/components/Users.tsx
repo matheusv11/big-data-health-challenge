@@ -18,7 +18,6 @@ export default function Users() {
 
   if (isUsersLoading) return <Loading />;
 
-  console.log('ERROR', error);
   if (error)
     return (
       <Typography variant="body1">

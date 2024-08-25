@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import Cart from '@/components/Navbar/Cart';
 import Link from 'next/link';
 import Welcome from '@/components/Navbar/Welcome';
-import ChangeUser from '@/components/Navbar/ChangeUser';
 
 export const metadata: Metadata = {
   title: 'Produtos',
@@ -28,8 +27,6 @@ export default function RootLayout({
           <Welcome />
 
           <Cart />
-
-          {/* <ChangeUser /> */}
 
           <Typography variant="h6">
             <Link href="/" style={{ cursor: 'pointer' }}>

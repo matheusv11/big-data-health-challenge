@@ -13,9 +13,7 @@ export const useAddToCart = () => {
 
       queryClient.setQueryData(
         [`user_${user.id}_cart`],
-        (
-          prev: ProductI[] | undefined // Custom hook for this
-        ) => (prev ? [data, ...prev] : [data])
+        (prev: ProductI[] | undefined) => (prev ? [data, ...prev] : [data])
       );
     },
   });
@@ -37,9 +35,8 @@ export const useRemoveFromCart = () => {
 
       queryClient.setQueryData(
         [`user_${user.id}_cart`],
-        (
-          prev: ProductI[] | undefined // Custom hook for this
-        ) => (prev ? prev.filter(c => c.id !== data?.id) : [data])
+        (prev: ProductI[] | undefined) =>
+          prev ? prev.filter(c => c.id !== data?.id) : [data]
       );
     },
   });
@@ -57,12 +54,8 @@ export const useGetCart = () => {
   const user = queryClient.getQueryData(['user_data']) as UserI;
 
   const { data, isLoading, error } = useQuery<ProductI[]>({
-    queryKey: [`user_${user.id}_cart`], // Define a persister
-    // enabled: false,
-    // queryFn: getUsers,
+    queryKey: [`user_${user.id}_cart`],
   });
-
-  console.log('Data22', data);
 
   return {
     data,

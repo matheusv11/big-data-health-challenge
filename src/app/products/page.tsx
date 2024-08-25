@@ -1,7 +1,4 @@
-import Image from 'next/image';
-import { Box, Grid, Paper } from '@mui/material';
-import styles from './page.module.css';
-import { UserI } from '@/types/user';
+import { Box } from '@mui/material';
 import {
   dehydrate,
   HydrationBoundary,

@@ -1,6 +1,6 @@
 import AddToCartBtn from '@/components/AddToCartBtn';
 import { ProductI } from '@/types/product';
-import { Box, Button, Grid, Paper, TextField } from '@mui/material';
+import { Box, Grid, Paper, TextField } from '@mui/material';
 import Image from 'next/image';
 
 export default async function ProductDetail({
@@ -8,8 +8,6 @@ export default async function ProductDetail({
 }: {
   params: { id: string };
 }) {
-  // Cache the api request or not?
-
   const res = await fetch(`https://fakestoreapi.com/products/${params.id}`, {
     cache: 'force-cache',
   });

@@ -1,8 +1,9 @@
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import type { Metadata } from 'next';
 import Cart from '@/components/Navbar/Cart';
 import Link from 'next/link';
 import Welcome from '@/components/Navbar/Welcome';
+import ChangeUser from '@/components/Navbar/ChangeUser';
 
 export const metadata: Metadata = {
   title: 'Produtos',
@@ -27,7 +28,14 @@ export default function RootLayout({
           <Welcome />
 
           <Cart />
-          <Button color="inherit">Trocar usuário</Button>
+
+          {/* <ChangeUser /> */}
+
+          <Typography variant="h6">
+            <Link href="/" style={{ cursor: 'pointer' }}>
+              Trocar usuário
+            </Link>
+          </Typography>
         </Toolbar>
       </AppBar>
       <Box>{children}</Box>

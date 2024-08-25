@@ -11,9 +11,7 @@ export const useUserLogin = () => {
   const mutation = useMutation({
     mutationFn: showUser,
     onSuccess: data => {
-      console.log('Data', data);
-      queryClient.setQueryData(['user_data'], { user: data });
-
+      queryClient.setQueryData(['user_data'], data);
       router.push('/products');
     },
   });
@@ -43,14 +41,13 @@ export const useUser = () => {
 };
 
 export const useUserData = () => {
-  const { data, isLoading, error } = useQuery<{ user: UserI }>({
-    queryKey: ['user_data'], // Define a persister
-    enabled: false,
-    // queryFn: getUsers,
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['user_data'],
+    queryFn: () => showUser(1), // Simulating taking a real user data
   });
 
   return {
-    data: data?.user,
+    data: data,
     isLoading,
     error,
   };

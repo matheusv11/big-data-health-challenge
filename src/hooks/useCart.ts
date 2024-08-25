@@ -1,30 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getProducts, addToCart } from '@/server/actions';
+import { showProduct } from '@/server/actions';
 import { UserI } from '@/types/user';
+import { ProductI } from '@/types/product';
 
 export const useAddToCart = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: addToCart,
+    mutationFn: showProduct,
     onSuccess: data => {
-      const user = queryClient.getQueryData(['user_data']); // Type
-      const cartData = {
-        id: 1,
-        name: 'Oi produto',
-      };
+      const user = queryClient.getQueryData(['user_data']) as UserI;
+
       queryClient.setQueryData(
         [`user_${user.id}_cart`],
         (
-          prev // Custom hook for this
-        ) => (prev ? [cartData, ...prev] : [cartData])
+          prev: ProductI[] | undefined // Custom hook for this
+        ) => (prev ? [data, ...prev] : [data])
       );
-
-      // queryClient.setQueryData(['cart'], {
-      //   id: 1,
-      //   name: 'Carlinhos De Dalva',
-      //   username: 'carlinhos',
-      // });
     },
   });
 
@@ -38,13 +30,15 @@ export const useAddToCart = () => {
 export const useGetCart = () => {
   const queryClient = useQueryClient();
 
-  const { user } = queryClient.getQueryData(['user_data']) as { user: UserI };
+  const user = queryClient.getQueryData(['user_data']) as UserI;
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: [`user_${user?.id}_cart`], // Define a persister
+  const { data, isLoading, error } = useQuery<ProductI[]>({
+    queryKey: [`user_${user.id}_cart`], // Define a persister
     // enabled: false,
     // queryFn: getUsers,
   });
+
+  console.log('Data22', data);
 
   return {
     data,

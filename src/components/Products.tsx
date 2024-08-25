@@ -98,7 +98,7 @@ export default function Users() {
               variant="contained"
               onClick={e => {
                 e.stopPropagation();
-                addToCart();
+                addToCart(u.id);
               }}
             >
               Adicionar ao carrinho

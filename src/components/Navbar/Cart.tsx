@@ -1,9 +1,17 @@
 'use client';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Box, Divider, IconButton, Popover, Typography } from '@mui/material';
-import { useState } from 'react';
+import {
+  Badge,
+  Box,
+  Divider,
+  IconButton,
+  Popover,
+  Typography,
+} from '@mui/material';
+import { useMemo, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { useGetCart } from '@/hooks/useCart';
+import Image from 'next/image';
 
 export default function Cart() {
   const { data } = useGetCart();
@@ -21,15 +29,23 @@ export default function Cart() {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
+  const totalValue = useMemo(
+    () => data?.reduce((prev, current) => prev + Number(current.price), 0),
+    [data]
+  );
+
   return (
     <>
       <IconButton
         color="inherit"
         aria-describedby={id}
         // variant="contained"
+        sx={{ mr: 2 }}
         onClick={handleClick}
       >
-        <ShoppingCartIcon />
+        <Badge badgeContent={data?.length} color="secondary">
+          <ShoppingCartIcon />
+        </Badge>
       </IconButton>
 
       <Popover
@@ -49,8 +65,24 @@ export default function Cart() {
       >
         <Typography sx={{ p: 2 }}>
           {data?.map(e => (
-            <Box sx={{ display: 'flex', gap: 2 }} key={e}>
-              <h2>{e.name}</h2>
+            <Box sx={{ mb: 2, display: 'flex', gap: 2 }} key={e.id}>
+              <Image
+                src={e.image}
+                alt="product picture"
+                width="42"
+                height="42"
+              />
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  maxWidth: '100px',
+                }}
+              >
+                {e.title}
+              </Typography>
               <IconButton color="error">
                 <CloseIcon />
               </IconButton>
@@ -58,7 +90,7 @@ export default function Cart() {
           ))}
 
           <Divider />
-          <Typography mt={1}>Total: 55</Typography>
+          <Typography mt={1}>Total: {totalValue}</Typography>
         </Typography>
       </Popover>
     </>

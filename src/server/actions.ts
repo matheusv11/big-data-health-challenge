@@ -70,7 +70,19 @@ export async function getProducts() {
   }
 }
 
-export async function addToCart({ productId }) {
+export async function showProduct(productId: number) {
+  try {
+    const product: ProductI = await fetch(
+      `https://fakestoreapi.com/products/${productId}`
+    ).then(res => res.json());
+
+    return product;
+  } catch (error) {
+    console.error(error);
+    // return { error };
+  }
+}
+export async function addToCart() {
   try {
     const token = await fetch('https://fakestoreapi.com/auth/login', {
       // Get the productData
@@ -92,5 +104,20 @@ export async function addToCart({ productId }) {
   } catch (error) {
     console.error(error);
     // return { error }
+  }
+}
+
+export async function showCart() {
+  try {
+    const user: UserI = await fetch(`https://fakestoreapi.com/carts/5}`).then(
+      res => res.json()
+    );
+
+    console.log('CART', user);
+
+    return user;
+  } catch (error) {
+    console.error(error);
+    // return { error };
   }
 }

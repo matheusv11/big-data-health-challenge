@@ -55,7 +55,7 @@ export default function Users() {
               height="128"
             />
             <Typography variant="subtitle1" textAlign="center">
-              {u.username}
+              {u.name.firstname}
             </Typography>
           </Paper>
         </Grid>

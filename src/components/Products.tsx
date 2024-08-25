@@ -1,45 +1,25 @@
 'use client';
 
 import Image from 'next/image';
-import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import { Box, Grid, Paper, TextField, Typography } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useProduct } from '@/hooks/useProduct';
-import { useAddToCart, useGetCart } from '@/hooks/useCart';
 
 import { useRouter } from 'next/navigation';
 import Loading from './Loading';
+import AddToCartBtn from './AddToCartBtn';
 
 export default function Users() {
   const { isLoading, error, products } = useProduct();
-  const { data: cartData } = useGetCart();
-  const { addToCart, isLoading: loadingCart } = useAddToCart();
 
   const router = useRouter();
 
   const [paperElevation, setPaperElevation] = useState<number>();
-  const [productBeingAdded, setProductBeingAdded] = useState<number>();
 
   const handleElevation = useCallback(
     (id: number) => (paperElevation === id ? 6 : 0),
     [paperElevation]
   );
-
-  const hasAdded = useCallback(
-    (id: number) => !!cartData?.find(c => c.id === id),
-    [cartData]
-  );
-
-  const productIsBeingAdded = useCallback(
-    (id: number) => productBeingAdded === id && loadingCart,
-    [loadingCart, productBeingAdded]
-  );
-
-  const handleCart =
-    (id: number) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-      e.stopPropagation();
-      setProductBeingAdded(id);
-      addToCart(id);
-    };
 
   if (isLoading) return <Loading fullPage />;
 
@@ -106,19 +86,7 @@ export default function Users() {
               </Typography>
             </Box>
 
-            {hasAdded(u.id) ? (
-              <Button variant="contained" disabled>
-                Adicionado
-              </Button>
-            ) : (
-              <Button
-                variant="contained"
-                disabled={productIsBeingAdded(u.id)}
-                onClick={handleCart(u.id)}
-              >
-                Adicionar ao carrinho
-              </Button>
-            )}
+            <AddToCartBtn productId={u.id} />
           </Paper>
         </Grid>
       ))}

@@ -1,21 +1,33 @@
-import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import AddToCartBtn from '@/components/AddToCartBtn';
+import { ProductI } from '@/types/product';
+import { Box, Button, Grid, Paper, TextField } from '@mui/material';
 import Image from 'next/image';
 
-export default async function ProductDetail({ params }) {
+export default async function ProductDetail({
+  params,
+}: {
+  params: { id: string };
+}) {
   // Cache the api request or not?
+
+  const res = await fetch(`https://fakestoreapi.com/products/${params.id}`, {
+    cache: 'force-cache',
+  });
+
+  const data = (await res.json()) as ProductI;
+
   return (
     <Box>
       <Paper elevation={8} sx={{ p: 2, minWidth: '50vw' }}>
         <Grid container gap={2}>
-          {/* <Paper elevation={8}></Paper> */}
           <Grid item lg="auto" xs={12}>
             <Image
-              src={`/profile-picture.jpg`}
+              src={data.image}
               alt="profile picture"
               width={0}
               height={0}
               sizes="25vw"
-              style={{ width: '100%', height: 'auto' }} // optional
+              style={{ width: '100%', height: 'auto' }}
             />
           </Grid>
           <Grid
@@ -28,9 +40,9 @@ export default async function ProductDetail({ params }) {
               gap: 2,
             }}
           >
-            <h2>Produto xxxxxx</h2>
+            <h2>{data.title}</h2>
 
-            <h2>Valor: 2222</h2>
+            <h2>Valor: {data.price}</h2>
             <TextField
               sx={{ mt: 1 }}
               fullWidth
@@ -39,22 +51,16 @@ export default async function ProductDetail({ params }) {
               rows={12}
               maxRows={12}
               disabled
-              color="success"
-              placeholder={`Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`}
+              value={data.description}
               InputProps={{
                 disableUnderline: true,
               }}
             />
 
-            <Button variant="contained" sx={{ minWidth: '50%' }}>
-              Adicionar ao carrinho
-            </Button>
+            <AddToCartBtn productId={data.id} />
           </Grid>
         </Grid>
       </Paper>
-      {/* <HydrationBoundary state={dehydrate(queryClient)}>
-      <Users />
-    </HydrationBoundary> */}
     </Box>
   );
 }
